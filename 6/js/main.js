@@ -1,5 +1,5 @@
 import {generateArray} from './data.js';
 import {createCards} from './createCard.js';
 
-generateArray();
-createCards();
+const dataArray = generateArray();
+createCards(dataArray);

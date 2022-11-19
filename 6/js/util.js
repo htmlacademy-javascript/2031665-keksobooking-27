@@ -27,9 +27,9 @@ export const createPlaceTitle = function () {
 
 export const getImageByIndex = function (i) {
   if (i < MAX_IMAGE_INDEX) {
-    return `img/avatar/user0${i}.png`;
+    return `img/avatars/user0${i}.png`;
   } else {
-    return `img/avatar/user${i}.png`;
+    return `img/avatars/user${i}.png`;
   }
 };
 
