@@ -3,11 +3,6 @@ import { showAlert } from './auxiliary-messages.js';
 import { createCard } from './create-card.js';
 import { tenCardElements, getFilteredData } from './filter.js';
 
-const adForm = document.querySelector('.ad-form');
-const mapForm = document.querySelector('.map__filters');
-const mapFormFields = mapForm.children;
-const adFormFields = adForm.children;
-const fetchURLData = 'https://27.javascript.pages.academy/keksobooking/data';
 const COUNTRY_CENTER_LAT = 35.6761919;
 const COUNTRY_CENTER_LNG = 139.6503106;
 const ZOOM_OF_MAP = 10;
@@ -15,17 +10,29 @@ const MAIN_ICON_SIZE = [52, 52];
 const MAIN_ICON_SETTINGS = [26, 52];
 const ICON_SIZE = [40, 40];
 const ICON_ANCHOR = [20, 40];
+const adForm = document.querySelector('.ad-form');
+const mapForm = document.querySelector('.map__filters');
+const mapFormFields = mapForm.children;
+const adFormFields = adForm.children;
+const fetchURLData = 'https://27.javascript.pages.academy/keksobooking/data';
 const addressElement = document.querySelector('#address');
 
-export const activatePage = (activate = false) => {
+export const activatePageMap = (activate = false) => {
   mapForm.classList[activate ? 'remove' : 'add']('map__filters--disabled');
-  adForm.classList[activate ? 'remove' : 'add']('ad-form--disabled');
   for (const mapFormField of mapFormFields){
     mapFormField[activate ? 'removeAttribute' : 'setAttribute']('disabled', 'disabled');
   }
+};
+
+export const activatePageForm = (activate = false) => {
+  adForm.classList[activate ? 'remove' : 'add']('ad-form--disabled');
   for (const adFormField of adFormFields) {
     adFormField[activate ? 'removeAttribute' : 'setAttribute']('disabled', 'disabled');
   }
+};
+
+export const initialMainMarkerValue = () => {
+  addressElement.value = `${(COUNTRY_CENTER_LAT).toFixed(5)}, ${(COUNTRY_CENTER_LNG).toFixed(5)}`;
 };
 
 export const map = L.map('map-canvas')
@@ -61,6 +68,8 @@ const mainPinMarker = L.marker(
   },
 );
 
+initialMainMarkerValue();
+
 mainPinMarker.addTo(map);
 
 mainPinMarker.on('moveend', (evt) => {
@@ -68,7 +77,7 @@ mainPinMarker.on('moveend', (evt) => {
   addressElement.value = `${(mainMarkerСoordinates.lat).toFixed(5)}, ${(mainMarkerСoordinates.lng).toFixed(5)}`;
 });
 
-export const resetMarkPosition = function () {
+export const resetMarkPosition = () => {
   mainPinMarker.setLatLng({
     lat: COUNTRY_CENTER_LAT,
     lng: COUNTRY_CENTER_LNG,
@@ -108,7 +117,8 @@ export const createMarker = (cards = tenCardElements) => {
       .addTo(markerGroup)
       .bindPopup(createCard(cards[i]));
   }
-  activatePage(true);
+  activatePageMap(true);
+  activatePageForm(true);
 };
 
 export const closePopup = () => {

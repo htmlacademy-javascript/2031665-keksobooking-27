@@ -1,13 +1,15 @@
 
 import { debounce } from './util.js';
-import { resetMarkPosition, deleteMarkerGroupLayer, createMarker, closePopup } from './map.js';
+import { deleteMarkerGroupLayer, createMarker, closePopup } from './map.js';
+const BEFORE_MIDDLE_PRICE = 10000;
+const AFTER_MIDDLE_PRICE = 50000;
+const MAX_CARDS_ON_MAP = 10;
+const DELAY = 500;
 const houseType = document.querySelector('[name="housing-type"]');
 const housePrice = document.querySelector('[name="housing-price"]');
 const houseRooms = document.querySelector('[name="housing-rooms"]');
 const houseGuests = document.querySelector('[name="housing-guests"]');
 const anyValue = 'any';
-const BEFORE_MIDDLE_PRICE = 10000;
-const AFTER_MIDDLE_PRICE = 50000;
 const featureWifi = document.querySelector('#filter-wifi');
 const featureDishwasher = document.querySelector('#filter-dishwasher');
 const featureParking = document.querySelector('#filter-parking');
@@ -15,10 +17,8 @@ const featureWasher = document.querySelector('#filter-washer');
 const featureElevator = document.querySelector('#filter-elevator');
 const featureConditioner = document.querySelector('#filter-conditioner');
 const arrayFiltersFeatures = [featureWifi, featureDishwasher, featureParking, featureWasher, featureElevator, featureConditioner];
-const MAX_CARDS_ON_MAP = 10;
 export const tenCardElements = [];
 const mapForm = document.querySelector('.map__filters');
-const DELAY = 500;
 
 const checkType = (card) => {
   if (houseType.value === card.offer.type || houseType.value === anyValue) {
@@ -85,7 +85,6 @@ const checkFeatures = (cardFeatures) => {
 
 const applyFilter = (evt, card) => {
   closePopup();
-  resetMarkPosition();
   deleteMarkerGroupLayer();
   if (!(evt.target.nodeName === 'SELECT' || evt.target.nodeName === 'INPUT')) {
     return null;

@@ -1,8 +1,10 @@
+const MIN_SLIDER_PRICE = 0;
+const MAX_SLIDER_PRICE = 100000;
+
 export const sliderElement = document.querySelector('.ad-form__slider');
 const valueElement = document.querySelector('#price');
 const typeElement = document.querySelector('#type');
-const MIN_SLIDER_PRICE = 0;
-const MAX_SLIDER_PRICE = 100000;
+
 const MinTypePrice = {
   BUNGALOW: '0',
   FLAT: '1000',
@@ -20,12 +22,8 @@ noUiSlider.create(sliderElement, {
   step: 1,
   connect: 'lower',
   format: {
-    to: function (value) {
-      return value.toFixed(0);
-    },
-    from: function (value) {
-      return parseFloat(value);
-    },
+    to: (value) => value.toFixed(0),
+    from: (value) => parseFloat(value)
   },
 });
 

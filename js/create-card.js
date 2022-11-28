@@ -8,7 +8,7 @@ export const typeOfHouse = {
   hotelra: 'Отель'
 };
 
-export const createCard = function (cardData) {
+export const createCard = (cardData) => {
   const card = cardTemplate.cloneNode(true);
   card.querySelector('.popup__title').textContent = cardData.offer.title;
   card.querySelector('.popup__text--price').textContent = `${cardData.offer.price} ₽/ночь`;
@@ -51,7 +51,7 @@ export const createCard = function (cardData) {
   return card;
 };
 
-export const renderCards = function (cardsData) {
+export const renderCards = (cardsData) => {
   const array = [];
   cardsData.forEach((cardData) => {
     array.push(createCard(cardData));

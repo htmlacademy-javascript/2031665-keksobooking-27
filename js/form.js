@@ -2,14 +2,14 @@ import { sendData } from './api.js';
 import { openErrorMessage, openSuccessMessage } from './auxiliary-messages.js';
 import { resetFormForAllElements } from './form-reset.js';
 
+const MIN_VALUE_FOR_TITLE = 30;
+const MAX_VALUE_FOR_TITLE = 100;
+const MAX_VALUE_FOR_PRICE = 100000;
 const adForm = document.querySelector('.ad-form');
 const submitButton = adForm.querySelector('.ad-form__submit');
 const fetchURL = 'https://27.javascript.pages.academy/keksobooking';
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
-const MIN_VALUE_FOR_TITLE = 30;
-const MAX_VALUE_FOR_TITLE = 100;
-const MAX_VALUE_FOR_PRICE = 100000;
 
 const changeTime = (evt) => {
   timeIn.value = evt.target.value;
@@ -33,21 +33,9 @@ export const pristine = new Pristine(adForm, {
   errorTextTag: 'span'
 }, true);
 
-function validateTitle(value) {
-  if (value.length < MIN_VALUE_FOR_TITLE || value.length > MAX_VALUE_FOR_TITLE) {
-    return false;
-  } else {
-    return true;
-  }
-}
+const validateTitle = (value) => value.length > MIN_VALUE_FOR_TITLE && value.length < MAX_VALUE_FOR_TITLE;
 
-function validatePrice(value) {
-  if (value < MAX_VALUE_FOR_PRICE) {
-    return true;
-  } else {
-    return false;
-  }
-}
+const validatePrice = (value) => value < MAX_VALUE_FOR_PRICE;
 
 const roomField = adForm.querySelector('[name="rooms"]');
 const capacityField = adForm.querySelector('[name="capacity"]');
@@ -58,15 +46,11 @@ const roomOption = {
   '100': ['0']
 };
 
-function validateDelivery() {
-  return roomOption[roomField.value].includes(capacityField.value);
-}
+const validateDelivery = () => roomOption[roomField.value].includes(capacityField.value);
 
-function getDeliveryErrorMessage() {
-  return `
+const getDeliveryErrorMessage = () => `
   ${roomField.value === '100' ? 'Такое количество гостей невозможно' : 'Количество гостей не соответствует количеству комнат'}
   `;
-}
 
 pristine.addValidator(capacityField, validateDelivery, getDeliveryErrorMessage);
 
